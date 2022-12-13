@@ -7,3 +7,26 @@ body {
     width: 60%;
     padding-left: 20%;
 }
+.card {
+    background-color: #a26c14;
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+    border-width: 2px;
+    border: solid #863e04;
+    border-radius: 5px;
+    display: inline-block;
+}
+.card:hover {
+    background-color: #a78042;
+    border: solid #875832;
+}
+.solution {
+    display: none;
+}
+.showSolution:hover + .solution {
+    display: block;
+}
+.solution:hover {
+    display: block;
+}

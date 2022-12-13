@@ -52,7 +52,6 @@ const editQuizCard = (index) => {
                     `;
     // Add the edit form to the page
     document.querySelector("#quizCardList").innerHTML = editForm;
-    // Add an event listener to the form
     document.querySelector("form").addEventListener("submit", (e) => {
         e.preventDefault();
         // Update the Quizcard

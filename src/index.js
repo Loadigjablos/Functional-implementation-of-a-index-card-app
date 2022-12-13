@@ -3,26 +3,83 @@ const createElement = require("virtual-dom/create-element");
 const hh = require("hyperscript-helpers");
 const { h } = require("virtual-dom");
 // allows using html tags as functions in javascript
-const { div, button, p, h1 } = hh(h);
+const { div, button, input, p, h1, from, select, option, a, hr } = hh(h);
 
 const MSGS = {
-    UPDATE_MODEL: "UPDATE_MODEL",
+    CREATE_INDEXCARD: "CREATE_INDEXCARD",
 };
 
 // View function which represents the UI as HTML-tag functions
 function view(dispatch, model) {
     return div([
-        h1(`My Title`),
-        button({ onclick: () => dispatch(MSGS.UPDATE_MODEL) }, "Update Model"),
-        p(`Time: ${model.currentTime}`),
+        button({ onclick: () => dispatch(MSGS.CREATE_INDEXCARD) }, "Add A Indexcard"),
+        div({}, renderAllCardsHTML(model) )
     ]);
+}
+
+function renderAllCardsHTML(model) {
+  const cards = model.cards;
+  let cardsHTMLModel = []
+  cards.forEach(card => {
+    cardsHTMLModel.push(renderCard(card.question, card.solution, card));
+  });
+  return cardsHTMLModel;
+}
+
+function renderCard(questionString, answerString, index) {
+  if (typeof questionString !== "string") {
+    return null;
+  }
+  return div({ class: card }[
+    p(questionString),
+    a({ class: "showSolution" }, `Show Solution`),
+    div({ class: "solution" }, [
+      hr(),
+      p(`Solution: `),
+      p(answerString),
+      select({onchange: (e) =>{
+        e.target.value;
+      }}, [
+        option(`Poor`),
+        option(`Good`),
+        option(`Perfect`),
+      ])
+    ]),
+    button({ onclick: () => {
+
+    }}, `Edit`)
+  ])
+}
+
+function createCardHTML() {
+  return div([
+    from({ }, [
+      input({ onchange: (e) => {
+        e.target.value;
+      }}),
+      input({ onchange: (e) =>{
+        e.target.value;
+      }}),
+      button({ onclick: () => {
+
+      }}, `Save`)
+    ]),
+  ])
+}
+
+function newCard() {
+  return {
+    question: "",
+    solution: "",
+    rate: 0,
+  }
 }
 
 // Update function which takes a message and a model and returns a new/updated model
 function update(msg, model) {
     switch (msg) {
-      case MSGS.UPDATE_MODEL:
-        return { ...model, currentTime: new Date().toLocaleTimeString() };
+      case MSGS.CREATE_INDEXCARD:
+        return { cards: [ ...model.cards, newCard() ] };
       default:
         return model;
     }
@@ -45,7 +102,13 @@ function app(initModel, update, view, node) {
 
 // The initial model when the app starts
 const initModel = {
-    currentTime: new Date().toLocaleTimeString(),
+    cards: [
+      {
+        question: "!TEST-TEST!",
+        Solution: "!TEST-TEST!",
+        rate: 1,
+      }
+    ],
 };
 
 // The root node of the app (the div with id="app" in index.html)
