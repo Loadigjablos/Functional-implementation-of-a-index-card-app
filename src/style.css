@@ -1,6 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-style: none;
 }
 body {
     text-align: center;
@@ -24,22 +25,24 @@ body {
 .solution {
     display: none;
 }
-a.showSolution:hover {
-    display: none;
-}
-
-.showSolution:hover + .solution {
+.showSolution:focus  + .solution {
     display: block;
 }
-.solution:hover {
+.showSolution  + .solution:focus-within {
+    display: block;
+}
+.solution:focus {
     display: block;
 }
 .cardDeck {
-    background-color: #d8d8d8;
+    background-color: #cacaca;
 }
 fieldset {
     padding-left:100px;
     padding-right:100px;
     width: 50%;
     margin-left: 15%;
+}
+a {
+    color: aqua;
 }

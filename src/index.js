@@ -14,9 +14,9 @@ const MSGS = {
 // View function which represents the UI as HTML-tag functions
 function view(dispatch, model) {
     return div([
-        button({ onclick: () => dispatch(MSGS.CREATE_INDEXCARD) }, "Add A Indexcard"),
+        button({ onclick: () => dispatch(MSGS.CREATE_INDEXCARD, { }) }, "Add A Indexcard"),
         div(),
-        div({ class: "cardDeck" }, renderAllCardsHTML(model) )
+        div({ className: "cardDeck" }, renderAllCardsHTML(model, dispatch) )
     ]);
 }
 
@@ -25,52 +25,51 @@ function view(dispatch, model) {
  * @param {*} model this has a array that will be converted to make indexcards
  * @returns Array with the HTML of all indexcards
  */
-function renderAllCardsHTML(model) {
+function renderAllCardsHTML(model, dispatch) {
   const cards = model.cards;
   let cardsHTMLModel = []
   cards.forEach((card, index) => {
-    cardsHTMLModel.push(renderCard(card.question, card.Solution, index));
+    cardsHTMLModel.push(renderCard(card.question, card.Solution, index, dispatch));
   });
   return cardsHTMLModel;
 }
 
-function renderCard(questionString, answerString, index) {
+function renderCard(questionString, answerString, index, dispatch) {
   if (typeof questionString !== "string" && typeof answerString !== "string") {
     return null;
   }
   const returnData = div({ className: "card" }, [
     p(questionString),
-    a({ className: "showSolution" }, `Show Solution`),
-    div({ className: "solution" }, [
+    a({ className: "showSolution", tabindex: 0, href: "#" }, `Show Solution`),
+    div({ className: "solution", tabindex: 0 }, [
       hr(),
       p(`Solution: `),
       p(answerString),
-      select({onchange: (e) =>{
-        e.target.value;
-      }}, [
+      select({ onchange: (e) =>{
+          e.target.value;
+        }
+      }, [
         option({ name: "0" }, `Poor`),
         option({ name: "1" }, `Good`),
         option({ name: "2" }, `Perfect`),
       ])
     ]),
     br(),
-    button({ onclick: () => {
-      dispatch(MSGS.EDIT_INDEXCARD, { index });
-    }}, `Edit`),
-    button({ onclick: () => {
-      dispatch(MSGS.DELETE_INDEXCARD, { index });
-    }}, `Delete`)
+    a({ className: "showEditCard", tabindex: 0, href: "#" }, `Edit Card`),
+    div({}, editCardHTML(questionString, answerString, index)),
+    br(),
+    button({ onclick: () => dispatch(MSGS.DELETE_INDEXCARD, { index })}, `Delete`)
   ]);
   return returnData;
 }
 
-function editCardHTML() {
+function editCardHTML(questionString, answerString, index) {
   return div([
     from({ }, [
-      input({ onchange: (e) => {
+      input({ value: questionString, onchange: (e) => {
         e.target.value;
       }}),
-      input({ onchange: (e) =>{
+      input({ value: answerString, onchange: (e) =>{
         e.target.value;
       }}),
       button({ onclick: () => {
@@ -95,9 +94,9 @@ function update(msg, model, command) {
       case MSGS.CREATE_INDEXCARD:
         return { cards: [ ...model.cards, newCard() ] };
       case MSGS.DELETE_INDEXCARD:
-        return model.cards !== command.index;
+        return { cards: model.cards.filter((card, index) => index !== command.index)} ;
       case MSGS.EDIT_INDEXCARD:
-
+        return "idiot";
       default:
         return model;
     }
