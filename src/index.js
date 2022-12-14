@@ -89,7 +89,7 @@ function newCard() {
 
 // Update function which takes a message, a model and command that returns a new/updated model
 function update(msg, model, command) {
-    model.cards.sort((a, b) => b.rate - a.rate);
+    model.cards.sort((a, b) => a.rate - b.rate);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
         return { cards: [ ...model.cards, newCard() ] };
