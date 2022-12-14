@@ -47,7 +47,7 @@ function renderCard(questionString, answerString, index, dispatch) {
       p(`Solution: `),
       p(answerString),
       select({ onchange: (e) =>{
-          e.target.value;
+          dispatch(MSGS.RATING_CHANGED, { newRating: e.target.value, index: index });
         }
       }, [
         option({ name: "0" }, `Poor`),
@@ -89,6 +89,7 @@ function newCard() {
 
 // Update function which takes a message and a model and returns a new/updated model
 function update(msg, model, command) {
+    model.cards.sort((a, b) => b.rate - a.rate);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
         return { cards: [ ...model.cards, newCard() ] };
@@ -117,7 +118,14 @@ function update(msg, model, command) {
           };
         }
         return model;
-        
+      case(MSGS.RATING_CHANGED):
+        return { cards: model.cards.filter((card, index) => {
+            if (index === command.index) {
+              return { ...card, rate: card.rate + parseInt(command.newRating) };
+            }
+            return card;
+          })
+        };
       default:
         return model;
     }
@@ -142,8 +150,13 @@ function app(initModel, update, view, node) {
 const initModel = {
     cards: [
       {
-        question: "!TEST-TEST!",
-        Solution: "!TEST-TEST!",
+        question: "!TEST-TEST!1",
+        Solution: "!TEST-TEST!1",
+        rate: 1,
+      },
+      {
+        question: "!TEST-TEST!2",
+        Solution: "!TEST-TEST!2",
         rate: 1,
       }
     ],
