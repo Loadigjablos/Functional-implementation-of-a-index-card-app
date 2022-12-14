@@ -123,16 +123,6 @@ function update(msg, model, command) {
     }
 }
 
-console.log(update(MSGS.EDIT_INDEXCARD, {
-  cards: [
-    {
-      question: "!TEST-TEST!",
-      Solution: "!TEST-TEST!",
-      rate: 1,
-    }
-  ],
-}, {questionString: 'sdfa', index: 0}))
-
 // Impure code below (not avoidable but controllable)
 function app(initModel, update, view, node) {
   let model = initModel;

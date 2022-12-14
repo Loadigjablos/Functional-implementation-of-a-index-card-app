@@ -9,6 +9,7 @@ Haupt Quellen sind die Präsentationen und Arbeitsblätter von Herr Patrick Mich
 https://chat.openai.com/chat
 https://beta.openai.com/playground
 https://atomizedobjects.com/blog/javascript/how-to-get-the-index-of-an-item-in-an-array-in-javascript/
+https://css-tricks.com/a-css-approach-to-trap-focus-inside-of-an-element/
 
 
 4	Auftrags Beschrieb

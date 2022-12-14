@@ -23,20 +23,14 @@ body {
     border: solid #65694b;
 }
 
-.solution {
-    display: none;
-}
-.showSolution:focus  + .solution, .showSolution  + .solution:focus-within, .solution:focus {
-    display: block;
-    background-color: #000000;
-}
 
-.editCard {
-    display: none;
+
+input {
+    width: 150px;
+    transition: ease-in-out, width .35s ease-in-out;
 }
-.showEditCard:focus  + .editCard, .showEditCard  + .editCard:focus-within, .editCard:focus {
-    display: block;
-    background-color: #000000;
+input:focus {
+    width: 250px;
 }
 
 .cardDeck {
