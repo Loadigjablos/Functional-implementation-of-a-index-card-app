@@ -10,6 +10,7 @@ https://chat.openai.com/chat
 https://beta.openai.com/playground
 https://atomizedobjects.com/blog/javascript/how-to-get-the-index-of-an-item-in-an-array-in-javascript/
 https://css-tricks.com/a-css-approach-to-trap-focus-inside-of-an-element/
+https://stackoverflow.com/questions/1133770/how-to-convert-a-string-to-an-integer-in-javascript
 
 
 4	Auftrags Beschrieb

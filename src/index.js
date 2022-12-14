@@ -89,6 +89,7 @@ function newCard() {
 
 // Update function which takes a message and a model and returns a new/updated model
 function update(msg, model, command) {
+  console.log(model);
     model.cards.sort((a, b) => b.rate - a.rate);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
@@ -99,7 +100,7 @@ function update(msg, model, command) {
         // if questionString is defined
         if(typeof command.questionString === "string") {
           // returns a changed card in the array
-          return { cards: model.cards.filter((card, index) => {
+          return { cards: model.cards.map((card, index) => {
               if (index === command.index) {
                 return { ...card, question: command.questionString };
               }
@@ -109,7 +110,7 @@ function update(msg, model, command) {
           // if answerString is defined.
         } else if(typeof command.answerString === "string") {
           // returns a changed card in the array
-          return { cards: model.cards.filter((card, index) => {
+          return { cards: model.cards.map((card, index) => {
               if (index === command.index) {
                 return { ...card, solution: command.answerString };
               }
@@ -119,9 +120,15 @@ function update(msg, model, command) {
         }
         return model;
       case(MSGS.RATING_CHANGED):
-        return { cards: model.cards.filter((card, index) => {
+        return { cards: model.cards.map((card, index) => {
             if (index === command.index) {
-              return { ...card, rate: card.rate + parseInt(command.newRating) };
+              if (command.newRating == "Perfect") {
+                return { ...card, rate: card.rate + 0 };
+              } else if (command.newRating == "Good") {
+                return { ...card, rate: card.rate + 1 };
+              } else if (command.newRating == "Poor") {
+                return { ...card, rate: card.rate + 2 };
+              }
             }
             return card;
           })

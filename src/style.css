@@ -22,9 +22,18 @@ body {
     background-color: #dcce8b;
     border: solid #65694b;
 }
-
-
-
+.solution {
+    display: none;
+}
+.showSolution:hover  + .solution, .showSolution  + .solution:hover, .solution:hover {
+    display: block;
+}
+.editCard {
+    display: none;
+}
+.showEditCard:hover  + .editCard, .showEditCard  + .editCard:hover, .editCard:hover {
+    display: block;
+}
 input {
     width: 150px;
     transition: ease-in-out, width .35s ease-in-out;
@@ -43,5 +52,5 @@ fieldset {
     margin-left: 15%;
 }
 a {
-    color: aqua;
+    color: #30ae6f;
 }
