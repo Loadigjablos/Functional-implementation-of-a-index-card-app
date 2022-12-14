@@ -8,25 +8,38 @@ body {
     padding-left: 20%;
 }
 .card {
-    background-color: #a26c14;
+    background-color: #ffefa1;
     padding: 5px;
     margin: 5px;
     width: 300px;
     border-width: 2px;
-    border: solid #863e04;
+    border: solid #909569;
     border-radius: 5px;
     display: inline-block;
 }
 .card:hover {
-    background-color: #a78042;
-    border: solid #875832;
+    background-color: #dcce8b;
+    border: solid #65694b;
 }
 .solution {
     display: none;
 }
+a.showSolution:hover {
+    display: none;
+}
+
 .showSolution:hover + .solution {
     display: block;
 }
 .solution:hover {
     display: block;
+}
+.cardDeck {
+    background-color: #d8d8d8;
+}
+fieldset {
+    padding-left:100px;
+    padding-right:100px;
+    width: 50%;
+    margin-left: 15%;
 }

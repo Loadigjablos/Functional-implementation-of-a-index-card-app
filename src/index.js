@@ -3,55 +3,68 @@ const createElement = require("virtual-dom/create-element");
 const hh = require("hyperscript-helpers");
 const { h } = require("virtual-dom");
 // allows using html tags as functions in javascript
-const { div, button, input, p, h1, from, select, option, a, hr } = hh(h);
+const { div, button, input, p, h1, from, select, option, a, hr, br } = hh(h);
 
 const MSGS = {
     CREATE_INDEXCARD: "CREATE_INDEXCARD",
+    DELETE_INDEXCARD: "DELETE_INDEXCARD",
+    EDIT_INDEXCARD: "EDIT_INDEXCARD",
 };
 
 // View function which represents the UI as HTML-tag functions
 function view(dispatch, model) {
     return div([
         button({ onclick: () => dispatch(MSGS.CREATE_INDEXCARD) }, "Add A Indexcard"),
-        div({}, renderAllCardsHTML(model) )
+        div(),
+        div({ class: "cardDeck" }, renderAllCardsHTML(model) )
     ]);
 }
 
+/**
+ * Using a Array and pushing the result in, isn't really functional but it works
+ * @param {*} model this has a array that will be converted to make indexcards
+ * @returns Array with the HTML of all indexcards
+ */
 function renderAllCardsHTML(model) {
   const cards = model.cards;
   let cardsHTMLModel = []
-  cards.forEach(card => {
-    cardsHTMLModel.push(renderCard(card.question, card.solution, card));
+  cards.forEach((card, index) => {
+    cardsHTMLModel.push(renderCard(card.question, card.Solution, index));
   });
   return cardsHTMLModel;
 }
 
 function renderCard(questionString, answerString, index) {
-  if (typeof questionString !== "string") {
+  if (typeof questionString !== "string" && typeof answerString !== "string") {
     return null;
   }
-  return div({ class: card }[
+  const returnData = div({ className: "card" }, [
     p(questionString),
-    a({ class: "showSolution" }, `Show Solution`),
-    div({ class: "solution" }, [
+    a({ className: "showSolution" }, `Show Solution`),
+    div({ className: "solution" }, [
       hr(),
       p(`Solution: `),
       p(answerString),
       select({onchange: (e) =>{
         e.target.value;
       }}, [
-        option(`Poor`),
-        option(`Good`),
-        option(`Perfect`),
+        option({ name: "0" }, `Poor`),
+        option({ name: "1" }, `Good`),
+        option({ name: "2" }, `Perfect`),
       ])
     ]),
+    br(),
     button({ onclick: () => {
-
-    }}, `Edit`)
-  ])
+      dispatch(MSGS.EDIT_INDEXCARD, { index });
+    }}, `Edit`),
+    button({ onclick: () => {
+      dispatch(MSGS.DELETE_INDEXCARD, { index });
+    }}, `Delete`)
+  ]);
+  return returnData;
 }
 
-function createCardHTML() {
+function editCardHTML() {
   return div([
     from({ }, [
       input({ onchange: (e) => {
@@ -76,10 +89,15 @@ function newCard() {
 }
 
 // Update function which takes a message and a model and returns a new/updated model
-function update(msg, model) {
+function update(msg, model, command) {
+  console.log(model, command);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
         return { cards: [ ...model.cards, newCard() ] };
+      case MSGS.DELETE_INDEXCARD:
+        return model.cards !== command.index;
+      case MSGS.EDIT_INDEXCARD:
+
       default:
         return model;
     }
@@ -91,8 +109,8 @@ function app(initModel, update, view, node) {
   let currentView = view(dispatch, model);
   let rootNode = createElement(currentView);
   node.appendChild(rootNode);
-  function dispatch(msg) {
-    model = update(msg, model);
+  function dispatch(msg, command) {
+    model = update(msg, model, command);
     const updatedView = view(dispatch, model);
     const patches = diff(currentView, updatedView);
     rootNode = patch(rootNode, patches);
