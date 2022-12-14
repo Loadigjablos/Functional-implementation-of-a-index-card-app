@@ -23,7 +23,21 @@ body {
     border: solid #65694b;
 }
 
+.solution {
+    display: none;
+}
+.showSolution:focus  + .solution, .showSolution  + .solution:focus-within, .solution:focus {
+    display: block;
+    background-color: #000000;
+}
 
+.editCard {
+    display: none;
+}
+.showEditCard:focus  + .editCard, .showEditCard  + .editCard:focus-within, .editCard:focus {
+    display: block;
+    background-color: #000000;
+}
 
 .cardDeck {
     background-color: #cacaca;

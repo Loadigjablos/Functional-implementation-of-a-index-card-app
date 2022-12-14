@@ -67,9 +67,11 @@ function renderCard(questionString, answerString, index, dispatch) {
 function editCardHTML(questionString, answerString, index, dispatch) {
   return div([
     form({ }, [
+      p(`Question: `),
       input({ value: questionString, onchange: (e) => {
         dispatch(MSGS.EDIT_INDEXCARD, { questionString: e.target.value, index: index });
       }}),
+      p(`Answer: `),
       input({ value: answerString, onchange: (e) => {
         dispatch(MSGS.EDIT_INDEXCARD, { answerString: e.target.value, index: index });
       }}),
@@ -108,7 +110,7 @@ function update(msg, model, command) {
           // returns a changed card in the array
           return { cards: model.cards.filter((card, index) => {
               if (index === command.index) {
-                return { ...card, Solution: command.answerString };
+                return { ...card, solution: command.answerString };
               }
               return card;
             })
