@@ -89,7 +89,6 @@ function newCard() {
 
 // Update function which takes a message and a model and returns a new/updated model
 function update(msg, model, command) {
-  console.log(model);
     model.cards.sort((a, b) => b.rate - a.rate);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
@@ -112,7 +111,7 @@ function update(msg, model, command) {
           // returns a changed card in the array
           return { cards: model.cards.map((card, index) => {
               if (index === command.index) {
-                return { ...card, solution: command.answerString };
+                return { ...card, Solution: command.answerString };
               }
               return card;
             })
