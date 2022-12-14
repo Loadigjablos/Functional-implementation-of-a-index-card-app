@@ -105,7 +105,7 @@ function update(msg, model, command) {
               return card;
             })
           };
-          // if answerString is defined
+          // if answerString is defined.
         } else if(typeof command.answerString === "string") {
           // returns a changed card in the array
           return { cards: model.cards.filter((card, index) => {
