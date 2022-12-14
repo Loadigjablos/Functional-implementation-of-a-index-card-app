@@ -22,18 +22,9 @@ body {
     background-color: #dcce8b;
     border: solid #65694b;
 }
-.solution {
-    display: none;
-}
-.showSolution:focus  + .solution {
-    display: block;
-}
-.showSolution  + .solution:focus-within {
-    display: block;
-}
-.solution:focus {
-    display: block;
-}
+
+
+
 .cardDeck {
     background-color: #cacaca;
 }

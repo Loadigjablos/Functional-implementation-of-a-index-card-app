@@ -3,12 +3,13 @@ const createElement = require("virtual-dom/create-element");
 const hh = require("hyperscript-helpers");
 const { h } = require("virtual-dom");
 // allows using html tags as functions in javascript
-const { div, button, input, p, h1, from, select, option, a, hr, br } = hh(h);
+const { div, button, input, p, h1, from, select, option, a, hr, br, form } = hh(h);
 
 const MSGS = {
     CREATE_INDEXCARD: "CREATE_INDEXCARD",
     DELETE_INDEXCARD: "DELETE_INDEXCARD",
     EDIT_INDEXCARD: "EDIT_INDEXCARD",
+    RATING_CHANGED: "RATING_CHANGED",
 };
 
 // View function which represents the UI as HTML-tag functions
@@ -56,25 +57,22 @@ function renderCard(questionString, answerString, index, dispatch) {
     ]),
     br(),
     a({ className: "showEditCard", tabindex: 0, href: "#" }, `Edit Card`),
-    div({}, editCardHTML(questionString, answerString, index)),
+    div({ className: "editCard" }, editCardHTML(questionString, answerString, index, dispatch)),
     br(),
     button({ onclick: () => dispatch(MSGS.DELETE_INDEXCARD, { index })}, `Delete`)
   ]);
   return returnData;
 }
 
-function editCardHTML(questionString, answerString, index) {
+function editCardHTML(questionString, answerString, index, dispatch) {
   return div([
-    from({ }, [
+    form({ }, [
       input({ value: questionString, onchange: (e) => {
-        e.target.value;
+        dispatch(MSGS.EDIT_INDEXCARD, { questionString: e.target.value, index: index });
       }}),
-      input({ value: answerString, onchange: (e) =>{
-        e.target.value;
+      input({ value: answerString, onchange: (e) => {
+        dispatch(MSGS.EDIT_INDEXCARD, { answerString: e.target.value, index: index });
       }}),
-      button({ onclick: () => {
-
-      }}, `Save`)
     ]),
   ])
 }
@@ -89,18 +87,49 @@ function newCard() {
 
 // Update function which takes a message and a model and returns a new/updated model
 function update(msg, model, command) {
-  console.log(model, command);
     switch (msg) {
       case MSGS.CREATE_INDEXCARD:
         return { cards: [ ...model.cards, newCard() ] };
       case MSGS.DELETE_INDEXCARD:
         return { cards: model.cards.filter((card, index) => index !== command.index)} ;
       case MSGS.EDIT_INDEXCARD:
-        return "idiot";
+        // if questionString is defined
+        if(typeof command.questionString === "string") {
+          // returns a changed card in the array
+          return { cards: model.cards.filter((card, index) => {
+              if (index === command.index) {
+                return { ...card, question: command.questionString };
+              }
+              return card;
+            })
+          };
+          // if answerString is defined
+        } else if(typeof command.answerString === "string") {
+          // returns a changed card in the array
+          return { cards: model.cards.filter((card, index) => {
+              if (index === command.index) {
+                return { ...card, Solution: command.answerString };
+              }
+              return card;
+            })
+          };
+        }
+        return model;
+        
       default:
         return model;
     }
 }
+
+console.log(update(MSGS.EDIT_INDEXCARD, {
+  cards: [
+    {
+      question: "!TEST-TEST!",
+      Solution: "!TEST-TEST!",
+      rate: 1,
+    }
+  ],
+}, {questionString: 'sdfa', index: 0}))
 
 // Impure code below (not avoidable but controllable)
 function app(initModel, update, view, node) {
