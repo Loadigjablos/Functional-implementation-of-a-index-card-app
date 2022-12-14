@@ -26,13 +26,13 @@ body {
 .solution {
     display: none;
 }
-.showSolution:hover  + .solution, .solution:hover {
+.showSolution:hover  + .solution, .solution:hover, select:focus {
     display: block;
 }
 .editCard {
     display: none;
 }
-.showEditCard:hover  + .editCard, .editCard:hover {
+.showEditCard:hover  + .editCard, .editCard:hover, input:focus {
     display: block;
 }
 

@@ -22,7 +22,7 @@ function view(dispatch, model) {
 }
 
 /**
- * Using a Array and pushing the result in, isn't really functional but it works
+ * Using a Array and pushing the result in, isn't really imutable, but well it works
  * @param {*} model this has a array that will be converted to make indexcards
  * @returns Array with the HTML of all indexcards
  */
