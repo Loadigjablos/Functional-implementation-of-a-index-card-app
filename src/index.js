@@ -3,7 +3,7 @@ const createElement = require("virtual-dom/create-element");
 const hh = require("hyperscript-helpers");
 const { h } = require("virtual-dom");
 // allows using html tags as functions in javascript
-const { div, button, input, p, h1, from, select, option, a, hr, br, form } = hh(h);
+const { div, button, input, p, select, option, a, hr, br, form } = hh(h);
 
 const MSGS = {
     CREATE_INDEXCARD: "CREATE_INDEXCARD",
@@ -87,7 +87,7 @@ function newCard() {
   }
 }
 
-// Update function which takes a message and a model and returns a new/updated model
+// Update function which takes a message, a model and command that returns a new/updated model
 function update(msg, model, command) {
     model.cards.sort((a, b) => b.rate - a.rate);
     switch (msg) {
@@ -154,18 +154,7 @@ function app(initModel, update, view, node) {
 
 // The initial model when the app starts
 const initModel = {
-    cards: [
-      {
-        question: "!TEST-TEST!1",
-        Solution: "!TEST-TEST!1",
-        rate: 1,
-      },
-      {
-        question: "!TEST-TEST!2",
-        Solution: "!TEST-TEST!2",
-        rate: 1,
-      }
-    ],
+    cards: [],
 };
 
 // The root node of the app (the div with id="app" in index.html)
@@ -173,3 +162,6 @@ const rootNode = document.getElementById("app");
 
 // Start the app
 app(initModel, update, view, rootNode);
+
+// To test, coment out app and rootNode 
+module.exports = { initModel, newCard, editCardHTML, renderCard, renderAllCardsHTML, view, MSGS };

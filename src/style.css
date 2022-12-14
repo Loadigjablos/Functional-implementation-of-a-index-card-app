@@ -22,18 +22,20 @@ body {
     background-color: #dcce8b;
     border: solid #65694b;
 }
+
 .solution {
     display: none;
 }
-.showSolution:hover  + .solution, .showSolution  + .solution:hover, .solution:hover {
+.showSolution:hover  + .solution, .solution:hover {
     display: block;
 }
 .editCard {
     display: none;
 }
-.showEditCard:hover  + .editCard, .showEditCard  + .editCard:hover, .editCard:hover {
+.showEditCard:hover  + .editCard, .editCard:hover {
     display: block;
 }
+
 input {
     width: 150px;
     transition: ease-in-out, width .35s ease-in-out;
@@ -41,7 +43,6 @@ input {
 input:focus {
     width: 250px;
 }
-
 .cardDeck {
     background-color: #cacaca;
 }
@@ -53,4 +54,8 @@ fieldset {
 }
 a {
     color: #30ae6f;
+}
+button {
+    font-size: 30px;
+    padding: 3px;
 }
