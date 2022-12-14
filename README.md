@@ -13,7 +13,7 @@ https://css-tricks.com/a-css-approach-to-trap-focus-inside-of-an-element/
 https://stackoverflow.com/questions/1133770/how-to-convert-a-string-to-an-integer-in-javascript
 
 
-4	Auftrags Beschrieb
+2	Auftrags Beschrieb
 Es soll eine Karteikarten Applikation mit dem funktionalem Paradigma erstellt werden und folgende Funktionen müssen enthalten sein:
 o	Eine Neue Quizkarte kann generiert werden.
 o	Bestehende Quizkarten können bearbeitet werden.
@@ -22,5 +22,8 @@ o	Die Lösung kann durch Klicken der Quizkarte angezeigt werden.
 o	Nach dem Aufdecken kann die Quizkarte bewertet werden (Schlecht Ranking = 0, Gut Ranking = 1, Perfekt Ranking = 2)
 o	Jede Quizkarte wird nach ihrem Ranking sortiert.
 
-6	Reflexion
+3	Entwickler Komentar
+leider konnte ich das ui nicht schöner machen, die css funktion :focus hat nicht ganz geklapt hat.
+
+4	Reflexion
 Mir ging es in der zeit als ich die App programmiert habe nicht so gut. Ich finde die Idee von funktionaler Programmierung eine Interessante Idee, aber werde in Zukunft trotzdem mit anderen Paradigmen arbeiten. Anders als man sonst arbeitet gibt einem andere Blickwinkel, die man vielleicht nie richtig gesehen hat, also danke für diesen Kurs.
